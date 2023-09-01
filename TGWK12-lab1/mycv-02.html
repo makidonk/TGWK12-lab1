@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,200;10..48,300;10..48,400;10..48,500;10..48,600;10..48,700;10..48,800&family=Indie+Flower&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0px;
+      }
+      p {
+        font-family: "Indie Flower", sans-serif;
+      }
+      li {
+        font-family: "Indie Flower", sans-serif;
+      }
+      h1 {
+        font-family: "Bricolage Grotesque", sans-serif;
+        font-size: 40px;
+      }
+      h2 {
+        font-family: "Bricolage Grotesque", sans-serif;
+      }
+      h3 {
+        font-family: "Bricolage Grotesque", sans-serif;
+        margin-bottom: 10px;
+      }
+      header {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+        height: 40px;
+        padding: 5px;
+        padding-left: 20px;
+        font-family: "Bricolage Grotesque", sans-serif;
+        font-size: 20px;
+        line-height: 40px;
+      }
+      #headerWorks {
+        color: rgb(157, 179, 172);
+      }
+
+      .backgroundBox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0px;
+        width: 100%;
+        height: 100%;
+      }
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        width: 60%;
+      }
+      .contact {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-left: 20px;
+        margin-right: 20px;
+        padding-top: 10px;
+        max-width: 800px;
+      }
+      .contactImage {
+        display: flex;
+        justify-content: center;
+        object-fit: cover;
+        padding: 10px;
+      }
+
+      #profileImg {
+        width: 300px;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 10px solid rgb(197, 209, 205);
+      }
+      .contactText {
+        padding: 3%;
+        margin-top: 2%;
+        padding-right: 20px;
+      }
+      .contact h1 {
+        font-size: 35px;
+      }
+      .contact h2 {
+        font-size: 20px;
+        color: rgb(157, 179, 172);
+      }
+      .contactInfo {
+        margin-top: 2vw;
+        margin-left: 1vw;
+        margin-top: 30px;
+        background-color: rgb(197, 209, 205);
+        padding: 20px;
+        width: 250px;
+        border-radius: 10px;
+      }
+      .contact p {
+        font-size: 17px;
+      }
+      .about {
+        margin-top: 30px;
+        color: black;
+      }
+      .about h2 {
+        color: black;
+      }
+      .about p {
+        margin-top: 15px;
+        padding-left: 1vw;
+      }
+      .firstRowBoxes,
+      .secondRowBoxes {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+      .education,
+      .professional,
+      .skills,
+      .languages {
+        background-color: rgb(197, 209, 205);
+        padding: 20px;
+        justify-content: center;
+        width: 42%;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h4>about</h4>
+      <h4 id="headerWorks">works</h4>
+      <h4>contact</h4>
+    </header>
+    <div class="backgroundBox">
+      <div class="contact">
+        <div class="contactImage">
+          <img id="profileImg" src="cvImage.JPG" />
+        </div>
+
+        <div class="contactText">
+          <h1>Mathilda Magnusson</h1>
+          <h2>New Media Design student</h2>
+          <div class="contactInfo">
+            <p>mail: mama22uv@student.ju.se</p>
+            <p>tel: 07 07 07 07 07</p>
+            <p>address: Sagogatan 3 Jönköping</p>
+          </div>
+          <div class="about">
+            <h2>About me</h2>
+            <p>
+              I am 22 years old, and currently studying for my bachelor's degree
+              in informatics, specialization Graphic design and web development.
+              <br />
+              My current passions in life are chrocheting, programming, and
+              beekeeping ( I'm still a newBee *pun intended* ).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="firstRowBoxes">
+          <div class="education">
+            <h3>Education</h3>
+            <ul>
+              <li>2022-2025 New media design 180hp at Jönköping University</li>
+              <li>2020 Mathematics 5 course</li>
+              <li>
+                2017-2020 The technical programme of Erik Dahlbergsgymnasiet
+              </li>
+            </ul>
+          </div>
+          <div class="professional">
+            <h3>Professional experience</h3>
+            <ul>
+              <li>2021-2022 Factory worker at Rol Ergo</li>
+              <li>2020-2021 Factory Worker at FJ Sintermetall</li>
+              <li>2017 Cashier at ICA</li>
+            </ul>
+          </div>
+        </div>
+        <div class="secondRowBoxes">
+          <div class="skills">
+            <h3>Computer Skills</h3>
+            <ul>
+              <li>Adobe Illustrator</li>
+              <li>Adobe inDesign</li>
+              <li>Adobe Photoshop</li>
+              <li>Figma</li>
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+              <li>Premiere Pro</li>
+              <li></li>
+              <li></li>
+            </ul>
+          </div>
+          <div class="languages">
+            <h3>Languages</h3>
+            <ul>
+              <li>Native language: Swedish</li>
+              <li>Fluent: English</li>
+              <li>Limited understanding: Spanish, Danish, Norwegian</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
