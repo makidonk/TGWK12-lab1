@@ -48,12 +48,6 @@ header {
 }
 .contact {
   max-width: 800px;
-  /* display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-left: 20px;
-  margin-right: 20px;
-  padding-top: 10px;
-  max-width: 800px; */
 }
 .contactImage {
   display: flex;
@@ -76,14 +70,14 @@ header {
 }
 .contact h1 {
   font-size: 35px;
+  font-weight: 900;
 }
 .contact h2 {
   font-size: 20px;
   color: rgb(157, 179, 172);
+  font-weight: 500;
 }
 .contactInfo {
-  margin-top: 2vw;
-  margin-left: 1vw;
   margin-top: 30px;
   background-color: rgb(197, 209, 205);
   padding: 20px;
@@ -91,7 +85,9 @@ header {
   border-radius: 10px;
 }
 .contact p {
-  font-size: 17px;
+  font-size: 19px;
+  padding: 1%;
+  margin-bottom:7px;
 }
 .about {
   margin-top: 30px;
@@ -115,6 +111,7 @@ header {
   border-radius: 10px;
   margin: 10px;
   background-color: rgb(197, 209, 205);
+  padding: 15px;
 }
 .columns {
   justify-content: center;
