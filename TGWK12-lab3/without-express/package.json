@@ -1,0 +1,19 @@
+{
+  "name": "without-express",
+  "version": "1.0.0",
+  "description": "lab 3 nr 1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lab",
+    "3"
+  ],
+  "author": "mathilda",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.0",
+    "http-status-codes": "^2.2.0"
+  }
+}
