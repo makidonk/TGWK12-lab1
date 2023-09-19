@@ -2,7 +2,7 @@
   "name": "with-express",
   "version": "1.0.0",
   "description": "with express",
-  "main": "index.js",
+  "main": "server-lab3-05.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

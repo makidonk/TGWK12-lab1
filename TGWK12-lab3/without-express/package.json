@@ -2,7 +2,7 @@
   "name": "without-express",
   "version": "1.0.0",
   "description": "lab 3 nr 1",
-  "main": "index.js",
+  "main": "server-lab3-01",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
