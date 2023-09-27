@@ -6,8 +6,8 @@ p {
   font-size: 20px;
 }
 .skills ul {
-    column-count: 2;
-    column-gap: 10px;
+  column-count: 2;
+  column-gap: 10px;
 }
 li {
   font-family: "Indie Flower", sans-serif;

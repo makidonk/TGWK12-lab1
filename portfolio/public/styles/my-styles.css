@@ -1,0 +1,192 @@
+* {
+  margin: 0px;
+}
+p {
+  font-family: "Indie Flower", sans-serif;
+  font-size: 20px;
+}
+.skills ul {
+  column-count: 2;
+  column-gap: 10px;
+}
+li {
+  font-family: "Indie Flower", sans-serif;
+  font-size: 20px;
+}
+h1 {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 50px;
+  margin-bottom: 0px;
+  line-height: 32px;
+  color: rgb(197, 209, 205);
+  margin-top: 80px;
+}
+h2 {
+  font-family: "Bricolage Grotesque", sans-serif;
+}
+h3 {
+  font-family: "Bricolage Grotesque", sans-serif;
+  margin-bottom: 10px;
+}
+header {
+  height: 45px;
+  padding: 5px;
+  padding-right: 0px;
+  display: flex;
+  justify-content: center;
+  margin-right: 0px;
+}
+.headerContent {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+}
+nav {
+  display: flex;
+  flex-direction: row;
+  height: 45px;
+  padding: 5px;
+  padding-right: 10px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 35px;
+  line-height: 40px;
+}
+nav h4 {
+  color: black;
+}
+nav h4:hover {
+  font-size: 40px;
+}
+a {
+  text-decoration: none;
+}
+#headerWorks {
+  color: rgb(157, 179, 172);
+}
+#headerWorks:hover {
+  font-size: 40px;
+}
+
+.backgroundBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 60%;
+}
+@media screen and (max-width: 560px) {
+  .contact {
+    padding-top: 10px;
+    max-width: 800px;
+  }
+}
+@media screen and (min-width: 561px) {
+  .contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    padding-top: 10px;
+    max-width: 800px;
+  }
+}
+.contactImage {
+  display: flex;
+  justify-content: center;
+  object-fit: cover;
+  padding: 10px;
+}
+
+#profileImg {
+  width: 300px;
+  height: 490px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 10px solid rgb(197, 209, 205);
+}
+
+@media screen and (max-width: 560px) {
+  .contactText {
+    display: grid;
+    justify-items: center;
+    padding: 3%;
+    margin-top: 2%;
+    padding-right: 20px;
+  }
+}
+@media screen and (min-width: 561px) {
+  .contactText {
+    padding: 3%;
+    margin-top: 2%;
+    padding-right: 20px;
+  }
+}
+@media screen and (max-width: 560px) {
+  .contact h1 {
+    font-size: 65px;
+    line-height: normal;
+    color: black;
+    margin-top: 0px;
+    line-height: 65px;
+    text-align: center;
+  }
+}
+@media screen and (min-width: 561px) {
+  .contact h1 {
+    font-size: 65px;
+    line-height: normal;
+    color: black;
+    margin-top: 0px;
+    line-height: 65px;
+  }
+}
+#name {
+  font-size: 85px;
+  font-weight: 900;
+  line-height: 85px;
+}
+.contact h2 {
+  font-size: 27px;
+  color: rgb(157, 179, 172);
+}
+.contactInfo {
+  margin-top: 40px;
+  margin-left: 1vw;
+  margin-top: 70px;
+  background-color: rgb(197, 209, 205);
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+}
+.contact p {
+  font-size: 17px;
+}
+
+.about h2 {
+  color: black;
+}
+.about p {
+  margin-top: 15px;
+  padding-left: 1vw;
+}
+
+.education,
+.professional,
+.skills,
+.languages,
+.other {
+  background-color: rgb(197, 209, 205);
+  padding: 30px;
+
+  justify-content: center;
+  width: 42%;
+  border-radius: 10px;
+  margin-top: 0px;
+}
