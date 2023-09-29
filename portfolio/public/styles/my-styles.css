@@ -28,6 +28,7 @@ h3 {
   font-family: "Bricolage Grotesque", sans-serif;
   margin-bottom: 10px;
 }
+
 header {
   height: 45px;
   padding: 5px;
@@ -53,13 +54,19 @@ nav {
 }
 nav h4 {
   color: black;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 40px;
 }
 nav h4:hover {
-  font-size: 40px;
+  font-size: 45px;
+  text-decoration: none;
+  line-height: 40px;
 }
 a {
   text-decoration: none;
 }
+
 #headerWorks {
   color: rgb(157, 179, 172);
 }
@@ -67,6 +74,18 @@ a {
   font-size: 40px;
 }
 
+#login-icon {
+  object-fit: cover;
+  width: 36px;
+  height: 36px;
+}
+
+#login-icon:hover {
+  object-fit: cover;
+  width: 42px;
+  height: 42px;
+  margin-top: -1px;
+}
 .backgroundBox {
   display: flex;
   flex-direction: column;
@@ -76,27 +95,16 @@ a {
   height: 100%;
   min-height: 100vh;
 }
+
 .content {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
   width: 60%;
 }
-@media screen and (max-width: 560px) {
-  .contact {
-    padding-top: 10px;
-    max-width: 800px;
-  }
-}
-@media screen and (min-width: 561px) {
-  .contact {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
 
-    padding-top: 10px;
-    max-width: 800px;
-  }
+.contact {
+  padding-top: 10px;
+  max-width: 800px;
 }
+
 .contactImage {
   display: flex;
   justify-content: center;
@@ -112,41 +120,20 @@ a {
   border: 10px solid rgb(197, 209, 205);
 }
 
-@media screen and (max-width: 560px) {
-  .contactText {
-    display: grid;
-    justify-items: center;
-    padding: 3%;
-    margin-top: 2%;
-    padding-right: 20px;
-  }
+.contactText {
+  padding: 3%;
+  margin-top: 2%;
+  padding-right: 20px;
 }
-@media screen and (min-width: 561px) {
-  .contactText {
-    padding: 3%;
-    margin-top: 2%;
-    padding-right: 20px;
-  }
+
+.contact h1 {
+  font-size: 65px;
+  line-height: normal;
+  color: black;
+  margin-top: 0px;
+  line-height: 65px;
 }
-@media screen and (max-width: 560px) {
-  .contact h1 {
-    font-size: 65px;
-    line-height: normal;
-    color: black;
-    margin-top: 0px;
-    line-height: 65px;
-    text-align: center;
-  }
-}
-@media screen and (min-width: 561px) {
-  .contact h1 {
-    font-size: 65px;
-    line-height: normal;
-    color: black;
-    margin-top: 0px;
-    line-height: 65px;
-  }
-}
+
 #name {
   font-size: 85px;
   font-weight: 900;
@@ -159,7 +146,7 @@ a {
 .contactInfo {
   margin-top: 40px;
   margin-left: 1vw;
-  margin-top: 70px;
+  margin-top: 30px;
   background-color: rgb(197, 209, 205);
   padding: 20px;
   width: 250px;
@@ -177,16 +164,35 @@ a {
   padding-left: 1vw;
 }
 
+.firstRowBoxes,
+.secondRowBoxes {
+  max-width: 100%;
+  margin-top: 30px;
+}
 .education,
 .professional,
 .skills,
-.languages,
-.other {
-  background-color: rgb(197, 209, 205);
-  padding: 30px;
-
-  justify-content: center;
-  width: 42%;
+.languages {
   border-radius: 10px;
-  margin-top: 0px;
+  margin: 10px;
+  background-color: rgb(197, 209, 205);
+  padding: 15px;
 }
+.columns {
+  justify-content: center;
+}
+
+.loginBox {
+  background-color: rgb(157, 179, 172);
+  width: 300px;
+  height: 350px;
+  border-radius: 10px;
+}
+h1#login {
+  color: black;
+}
+
+
+/* //how are we supposed to check if people have logged in if we cant use java? */
+/* how do i check who have logged in based on database? yes/no inlog-thing?*/
+/* loged in animation icon???*/
