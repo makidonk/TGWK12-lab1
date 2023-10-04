@@ -94,7 +94,7 @@ app.post(`/login`, (request, response) => {
 
 //renders the projects route viwew
 app.get("/projects", (request, response) => {
-  db.all("SELECT * FROM projects", function (error, theProjects) {
+  db.all("SELECT * FROM projects", function (error, projects) {
     if (error) {
       const model = {
         dbError: true,
@@ -110,7 +110,7 @@ app.get("/projects", (request, response) => {
       const model = {
         dbError: false,
         theError: "",
-        projects: theProjects,
+        projects: projects,
         isLoggedIn: request.session.isLoggedIn,
         name: request.session.name,
         isAdmin: request.session.isAdmin,
@@ -127,7 +127,7 @@ app.get(`/projects/delete/id`, (request, response) => {
     db.run(
       "DELETE FROM projects WHERE pid=?",
       [id],
-      function (error, theProjects) {
+      function (error, projects) {
         if (error) {
           const model = {
             dbError: true,
@@ -154,59 +154,70 @@ app.get(`/projects/delete/id`, (request, response) => {
   }
 });
 
-db.run(
-  "CREATE TABLE projects (pid INTEGER PRIMARY KEY, pname TEXT NOT NULL, pyear INTEGER NOT NULL, pdesc TEXT NOT NULL, ptype TEXT NOT NULL, pimgurl TEXT NOT NULL)",
-  (error) => {
+db.get(
+  "SELECT name FROM sqlite_master WHERE type='table' AND name='projects'",
+  (error, row) => {
     if (error) {
       console.log("error:", error);
-    } else {
-      console.log("---> table projects created");
-      const projects = [
-        {
-          id: "1",
-          name: "Pippi Långstrum Illustration",
-          year: 2022,
-          desc: "This is an illustration of pippi",
-          type: "illustrator",
-          url: "publicimgMe.jpg",
-        },
-        {
-          id: "2",
-          name: "djur",
-          year: 2022,
-          desc: "This is an illustration of an animal",
-          type: "illustrator",
-          url: "publicimgMe.jpg",
-        },
-        {
-          id: "3",
-          name: "Catch the students JavaScript game",
-          year: 2023,
-          desc: "This is a game made with javascript",
-          type: "Code",
-          url: "publicimgMe.jpg",
-        },
-      ];
-      projects.forEach((oneProject) => {
-        db.run(
-          "INSERT INTO projects (pid, pname, pyear, pdesc, ptype, pimgurl) VALUES (?,?,?,?,?,?)",
-          [
-            oneProject.id,
-            oneProject.name,
-            oneProject.year,
-            oneProject.desc,
-            oneProject.type,
-            oneProject.imgurl,
-          ],
-          (error) => {
-            if (error) {
-              console.log("error:", error);
-            } else {
-              console.log("line added to the projects table");
-            }
+    } else if (!row) {
+      // The "projects" table does not exist, create it
+
+      db.run(
+        "CREATE TABLE projects (pid INTEGER PRIMARY KEY, pname TEXT NOT NULL, pyear INTEGER NOT NULL, pdesc TEXT NOT NULL, ptype TEXT NOT NULL, pimgurl TEXT NOT NULL)",
+        (error) => {
+          if (error) {
+            console.log("error:", error);
+          } else {
+            console.log("---> table projects created");
+            const projects = [
+              {
+                pid: "1",
+                pname: "Pippi Långstrum Illustration",
+                pyear: 2022,
+                pdesc: "This is an illustration of pippi",
+                ptype: "illustrator",
+                purl: "public/img/Me.jpg",
+              },
+              {
+                pid: "2",
+                pname: "djur",
+                pyear: 2022,
+                pdesc: "This is an illustration of an animal",
+                ptype: "illustrator",
+                purl: "public/img/Me.jpg",
+              },
+              {
+                pid: "3",
+                pname: "Catch the students JavaScript game",
+                pyear: 2023,
+                pdesc: "This is a game made with javascript",
+                ptype: "Code",
+                purl: "public/img/Me.jpg",
+              },
+            ];
+            projects.forEach((oneProject) => {
+              db.run(
+                "INSERT INTO projects (pid, pname, pyear, pdesc, ptype, purl) VALUES (?,?,?,?,?,?)",
+                [
+                  oneProject.pid,
+                  oneProject.pname,
+                  oneProject.pyear,
+                  oneProject.pdesc,
+                  oneProject.ptype,
+                  oneProject.pimgurl,
+                ],
+                (error) => {
+                  if (error) {
+                    console.log("error:", error);
+                  } else {
+                    console.log("line added to the projects table");
+                  }
+                }
+              );
+            });
           }
-        );
-      });
+        }
+      );
     }
   }
 );
