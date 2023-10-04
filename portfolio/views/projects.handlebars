@@ -1,0 +1,34 @@
+<div id="main">
+  <div class="backgroundBox">
+    <div>
+      <h1>Projects</h1>
+      {{#if isAdmin}}
+        <div>
+          <a href="/projects/new">New project</a>
+        </div>
+      {{/if}}
+      <div>
+        {{#if dbError}}
+          <h2>error</h2>
+        {{else}}
+          {{#each projects}}
+          <div class="projectCars">
+            <div class="projectCard">
+              <img src=`{{pimgurl}}` class="projectImage"/>
+              <h3>{{pname}} </h3>
+               <h3>{{pyear}} </h3>
+               <h3>{{ptype}} </h3>
+            </div>
+            <div class="cardFooter">
+              {{#if isAdmin}}
+              <a href = "projects/uptade/[[pid]]">Modify</a>
+              <a href="/projects/delete/[[pid]]" >Delete</a>
+              {{/if}}
+            </div>
+          </div>
+          {{/each}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>

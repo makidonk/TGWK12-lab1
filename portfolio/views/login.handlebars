@@ -2,13 +2,15 @@
   <div>
     <h1 id="login">login</h1>
     <div class="loginBox">
-      <form action="/login-test" method="post" id="formlogin">
+      <form action="/login" method="post" id="formlogin">
         <fieldset>
-          <label for="firstname">First name:</label><br />
-          <input type="text" id="firstname" name="firstname" /><br />
-          <label for="lastname">Last name:</label><br />
-          <input type="password" id="lastname" name="lastname" />
 
+          <label for="un">First name<br /></label>
+          <input type="text" id="un" name="un" required="required" />
+          <br />
+          <label for="pw">Password<br /></label>
+          <input type="password" id="pw" name="pw" required="required" />
+          <br />
         </fieldset>
         <input type="submit" value="Log in" />
       </form>

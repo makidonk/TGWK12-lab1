@@ -1,11 +1,18 @@
 <header id="menu">
   <div class="headerContent">
     <nav>
-      <a href="/">
-        <img src="img/login.svg" id="login-icon" />
-      </a>
-      <a href="/about"><h4>about</h4></a>
-      <a href="/works"><h4 id="headerWorks">works</h4></a>
+      {{#if isLoggedIn}}
+        <a href="/login">
+          <img src="img/loggedin.svg" id="login-icon" />
+        </a>
+
+      {{else}}
+        <a href="/login">
+          <img src="img/login.svg" id="login-icon" />
+        </a>
+      {{/if}}
+      <a href="/"><h4>about</h4></a>
+      <a href="/projects"><h4 id="headerWorks">projects</h4></a>
       <a href="/skills"><h4>skills</h4></a>
 
     </nav>
