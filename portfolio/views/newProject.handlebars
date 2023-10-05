@@ -1,0 +1,15 @@
+<div class="backgroundBox">
+  <div>
+    <h1>Add new project</h1>
+    {{#if isLoggedIn}}
+      {{#if isAdmin}}
+        <h2>hello</h2>
+      {{else}}
+        <h2>Sorry, you need to be an administer to add a new project!</h2>
+      {{/if}}
+    {{else}}
+      <h2>Sorry, you need to be logged in to add a new project!</h2>
+      <h2>Please go to the <a href="/login">login</a> page</h2>
+    {{/if}}
+  </div>
+</div>

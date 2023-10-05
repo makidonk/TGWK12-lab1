@@ -1,0 +1,27 @@
+<div id="main">
+    <div class="container">
+        <h1>My projects</h1>
+        <div class="columns col-gapless">
+            {{#if dbError}}
+                <div>
+                    Sorry, there was a problem with the database:<br />
+                    {{theError}}
+                </div>
+            {{else}}
+                {{#each projects}}
+                    <div class="column col-3 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="{{pimgURL}}" alt="{{pimgURL}}" class="img-responsive">
+                            </div>
+                            <div class="card-header">
+                                <div class="card-title h3">{{pname}}</div>
+                                <div class="card-subtitle text-gray">{{pyear}} --- {{ptype}}</div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            {{/if}}
+        </div>
+    </div>
+</div>

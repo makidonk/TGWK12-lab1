@@ -63,7 +63,7 @@ nav h4:hover {
   text-decoration: none;
   line-height: 40px;
 }
-a {
+#menu nav a {
   text-decoration: none;
 }
 
@@ -191,7 +191,6 @@ a {
 h1#login {
   color: black;
 }
-
 
 /* //how are we supposed to check if people have logged in if we cant use java? */
 /* how do i check who have logged in based on database? yes/no inlog-thing?*/
