@@ -41,6 +41,8 @@ header {
   width: 60%;
   display: flex;
   justify-content: center;
+  position: fixed;
+  background-color: white;
 }
 nav {
   display: flex;
@@ -192,6 +194,10 @@ h1#login {
   color: black;
 }
 
-/* //how are we supposed to check if people have logged in if we cant use java? */
-/* how do i check who have logged in based on database? yes/no inlog-thing?*/
-/* loged in animation icon???*/
+.projectImage {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 10px solid rgb(197, 209, 205);
+}

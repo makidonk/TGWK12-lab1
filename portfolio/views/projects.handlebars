@@ -1,4 +1,4 @@
-<div id="main">
+
   <div class="backgroundBox">
     <div>
       <h1>Projects</h1>
@@ -11,18 +11,19 @@
         {{#if dbError}}
           <h2>error</h2>
         {{else}}
+        
           {{#each projects}}
           <div class="projectCards">
             <div class="projectCard">
-              <img src=`{{pimgurl}}` class="projectImage"/>
+              <img src="{{pimgURL}}" class="projectImage"/>
               <h3>{{pname}} </h3>
                <h3>{{pyear}} </h3>
                <h3>{{ptype}} </h3>
             </div>
             <div class="cardFooter">
               {{#if ../isAdmin}}
-              <a href = "/projects/uptade/[[pid]]">Modify</a>
-              <a href="/projects/delete/[[pid]]" >Delete</a>
+              <a href = "/projects/modify/{{pid}}">Modify</a>
+              <a href="/projects/delete/{{pid}}" >Delete</a>
               {{/if}}
             </div>
           </div>
@@ -31,4 +32,3 @@
       </div>
     </div>
   </div>
-</div>

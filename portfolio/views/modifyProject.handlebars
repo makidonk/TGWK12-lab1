@@ -1,0 +1,71 @@
+<div class="backgroundBox">
+  <div>
+    <h1>Modify Project {{project.pname}}</h1>
+    {{#if isLoggedIn}}
+      {{#if isAdmin}}
+        <form action="/projects/modify/{{project.pid}}" method="post">
+          <fieldset>
+            <label for="projname">Project name</label>
+            <br />
+            <input
+              type="text"
+              name="projname"
+              id="projname"
+              required="required"
+              value="{{project.pname}}"
+            />
+            <br />
+            <label for="projyear">Project year</label>
+            <br />
+            <input
+              type="number"
+              name="projyear"
+              id="projyear"
+              required="required"
+              value="{{project.pyear}}"
+            />
+            <br />
+            <label for="projdesc">Project description</label><br />
+            <textarea
+              name="projdesc"
+              id="projdesc"
+              cols="30"
+              rows="10"
+              required="required"
+            >
+              {{project.pdesc}}
+            </textarea>
+            <br />
+            <label for="projtype">Project type</label><br />
+                <select name="projtype" id="projtype" required="required"> 
+                    <option value="Illustrator"{{#if (theTypeI project.ptype)}} selected="selected"{{/if}}>Illustrator</option>
+                    <option value="Photoshop"{{#if (theTypePh project.ptype)}} selected="selected"{{/if}}>Photoshop</option>
+                    <option value="Programming"{{#if (theTypePr project.ptype)}} selected="selected"{{/if}}>Programming</option>
+                    <option value="Illustrator and Programming" {{#if (theTypeIP project.ptype)}} selected="selected"{{/if}}>IllustratorAndProgramming</option>
+                    <option value="Indesign" {{#if (theTypeInD project.ptype)}} selected="selected"{{/if}}>InDesign</option>
+                    <option value="Illustrator and InDesign" {{#if (theTypeInDI project.ptype)}} selected="selected"{{/if}}>IndesignAndIllustrator</option>           
+                </select>  
+            <br />
+            <label for="projimg">Project image url:</label>
+            <br />
+            <input
+              type="text"
+              name="projimg"
+              id="projimg"
+              placeholder="/img/example.jpg"
+              required="required"
+              value="{{project.pimgURL}}"
+            />
+
+          </fieldset>
+          <input type="submit" value="Update Project" />
+        </form>
+      {{else}}
+        <p>Sorry, you need to be an admin to update a project</p>
+      {{/if}}
+    {{else}}
+      <h2>Sorry, you need to be logged in to add a new project!</h2>
+      <h2>Please go to the <a href="/login">login</a> page</h2>
+    {{/if}}
+  </div>
+</div>

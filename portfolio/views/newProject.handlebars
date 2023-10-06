@@ -3,7 +3,63 @@
     <h1>Add new project</h1>
     {{#if isLoggedIn}}
       {{#if isAdmin}}
-        <h2>hello</h2>
+        <form action="/projects/new" method="post">
+          <fieldset>
+            <label for="projname">Project name</label>
+            <br />
+            <input
+              type="text"
+              name="projname"
+              id="projname"
+              required="required"
+            />
+            <br />
+            <label for="projyear">Project year</label>
+            <br />
+            <input
+              type="number"
+              name="projyear"
+              id="projyear"
+              required="required"
+            />
+            <br />
+            <label for="projdesc">Project description</label><br />
+            <textarea
+              name="projdesc"
+              id="projdesc"
+              cols="30"
+              rows="10"
+              required="required"
+            >
+
+            </textarea>
+            <br />
+            <label for="projtype">Project type</label><br />
+            <select name="projtype" id="projtype" required="required">
+              <option value="Illustrator">Illustrator</option>
+              <option value="Photoshop">Photoshop</option>
+              <option value="Programming">Programming</option>
+              <option
+                value="Illustrator and Programming"
+              >Illustrator&Programming</option>
+              <option value="Indesign">InDesign</option>
+              <option
+                value="Illustrator and InDesign"
+              >Indesign&Illustrator</option>
+            </select>
+            <br />
+            <label for="projimg">Project image url:</label><br />
+            <input
+              type="text"
+              name="projimg"
+              id="projimg"
+              placeholder="/img/example.jpg"
+              required="required"
+            />
+            <br />
+          </fieldset>
+          <input type="submit" value="add project" />
+        </form>
       {{else}}
         <h2>Sorry, you need to be an administer to add a new project!</h2>
       {{/if}}
