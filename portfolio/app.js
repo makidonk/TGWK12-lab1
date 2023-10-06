@@ -70,51 +70,62 @@ app.get("/projects", (request, response) => {
 });
 
 app.get("/skills", (request, response) => {
-  db.all("SELECT * FROM skills", function (error, theSkills) {
-    if (error) {
+  // Retrieve data from the "skills" table
+  db.all("SELECT * FROM skills", function (skillsError, skillsResult) {
+    if (skillsError) {
       const model = {
         dbError: true,
-        theError: error,
+        theError: skillsError,
         skills: [],
+        jobs: [],
         isLoggedIn: request.session.isLoggedIn,
         name: request.session.name,
         isAdmin: request.session.isAdmin,
       };
-      // renders the page with the model
+      // Render the page with the model
       response.render("skills.handlebars", model);
     } else {
-      const model = {
-        dbError: false,
-        theError: "",
-        skills: theSkills,
-        isLoggedIn: request.session.isLoggedIn,
-        name: request.session.name,
-        isAdmin: request.session.isAdmin,
-      };
-      // renders the page with the model
-      response.render("skills.handlebars", model);
+      // Retrieve data from the "jobs" table
+      db.all("SELECT * FROM jobs", function (jobsError, jobsResult) {
+        if (jobsError) {
+          const model = {
+            dbError: true,
+            theError: jobsError,
+            skills: [],
+            jobs: [],
+            isLoggedIn: request.session.isLoggedIn,
+            name: request.session.name,
+            isAdmin: request.session.isAdmin,
+          };
+          // Renders the page with the model
+          response.render("skills.handlebars", model);
+        } else {
+          const model = {
+            dbError: false,
+            theError: "",
+            skills: skillsResult,
+            jobs: jobsResult,
+            isLoggedIn: request.session.isLoggedIn,
+            name: request.session.name,
+            isAdmin: request.session.isAdmin,
+          };
+          // Renders the page with the model
+          response.render("skills.handlebars", model);
+        }
+      });
     }
   });
-
-  app.get("/login", (request, response) => {
-    const model = {
-      isLoggedIn: request.session.isLoggedIn,
-      name: request.session.name,
-      isAdmin: request.session.isAdmin,
-    };
-    response.render("login.handlebars", model);
-  });
 });
 
-app.get("/logout", function (request, response) {
-  request.session.destroy((error) => {
-    console.log("error while destroying session: ", error);
-  });
-
-  console.log("logged out");
-  response.redirect("/");
+//login
+app.get("/login", (request, response) => {
+  const model = {
+    isLoggedIn: request.session.isLoggedIn,
+    name: request.session.name,
+    isAdmin: request.session.isAdmin,
+  };
+  response.render("login.handlebars", model);
 });
-
 app.post(`/login`, (request, response) => {
   console.log("URL: ", request.url);
   //doesnt work without this:
@@ -139,7 +150,17 @@ app.post(`/login`, (request, response) => {
   }
 });
 
-//ADD THE TABLES
+//logout
+app.get("/logout", function (request, response) {
+  request.session.destroy((error) => {
+    console.log("error while destroying session: ", error);
+  });
+
+  console.log("logged out");
+  response.redirect("/");
+});
+
+//projects database
 db.run(
   "CREATE TABLE projects (pid INTEGER PRIMARY KEY, pname TEXT NOT NULL, pyear INTEGER NOT NULL, pdesc TEXT NOT NULL, ptype TEXT NOT NULL, pimgURL TEXT NOT NULL)",
   (error) => {
@@ -157,7 +178,7 @@ db.run(
           year: 2022,
           desc: "This is an illustration of pippi",
           type: "illustrator",
-          url: "/img/Me.jpg",
+          url: "/img/stylization.png",
         },
         {
           id: "2",
@@ -214,7 +235,6 @@ app.get("/projects/new", function (request, response) {
     response.redirect("/login");
   }
 });
-
 app.post("/projects/new", (request, response) => {
   const newp = [
     request.body.projname,
@@ -274,7 +294,6 @@ app.get(`/projects/delete/:id`, (request, response) => {
     response.redirect("/login");
   }
 });
-
 app.post("/projects/update/:id", (request, response) => {
   const id = request.params.id;
   const newp = [
@@ -303,6 +322,7 @@ app.post("/projects/update/:id", (request, response) => {
   }
 });
 
+//modify a project
 app.get("/projects/modify/:id", (request, response) => {
   const id = request.params.id;
   db.get(
@@ -354,7 +374,6 @@ app.get("/projects/modify/:id", (request, response) => {
     }
   );
 });
-
 app.post("/projects/modify/:id", (request, response) => {
   const id = request.params.id;
   const newp = [
@@ -383,7 +402,7 @@ app.post("/projects/modify/:id", (request, response) => {
   }
 });
 
-// creates skills projects at startup
+// skills database
 db.run(
   "CREATE TABLE skills (sid INTEGER PRIMARY KEY, sname TEXT NOT NULL, sdesc TEXT NOT NULL, stype TEXT NOT NULL)",
   (error) => {
@@ -475,9 +494,9 @@ db.run(
   }
 );
 
-//jobs
+//jobs database
 db.run(
-  "CREATE TABLE jobs (jid INTEGER PRIMARY KEY, jname TEXT NOT NULL, jsyear INTEGER NOT NULL,jeyear INTEGER NOT NULL, pdesc TEXT NOT NULL)",
+  "CREATE TABLE jobs (jid INTEGER PRIMARY KEY, jname TEXT NOT NULL, jsyear INTEGER NOT NULL,jeyear INTEGER NOT NULL, jdesc TEXT NOT NULL)",
   (error) => {
     if (error) {
       // tests error: display error
@@ -486,49 +505,53 @@ db.run(
       // tests error: no error, the table has been created
       console.log("---> Table jobs created!");
 
-      const projects = [
+      const jobs = [
         {
           id: "1",
-          name: "Pippi Långstrum Illustration",
-          year: 2022,
-          desc: "This is an illustration of pippi",
-          type: "illustrator",
-          url: "/img/Me.jpg",
+          name: "Rol Ergo",
+          syear: 2021,
+          eyear: 2022,
+          desc: "Factory work",
         },
         {
           id: "2",
-          name: "djur",
-          year: 2022,
-          desc: "This is an illustration of an animal",
-          type: "illustrator",
-          url: "/img/Me.jpg",
+          name: "FJ Sintermetall",
+          syear: 2020,
+          eyear: 2021,
+          desc: "Factory work",
         },
         {
           id: "3",
-          name: "Catch the students JavaScript game",
-          year: 2023,
-          desc: "This is a game made with javascript",
-          type: "Programming",
-          url: "/img/Me.jpg",
+          name: "ICA",
+          syear: 2017,
+          eyear: 2018,
+          desc: "Cashier",
+        },
+        {
+          id: "4",
+          name: "Assistant",
+          syear: 2016,
+          eyear: 2017,
+          desc: "Assistant to Spider Man, flying, fighting",
+        },
+        {
+          id: "5",
+          name: "Chiller",
+          syear: 2001,
+          eyear: 2016,
+          desc: "Watched movies and played piano",
         },
       ];
       // inserts projects
-      projects.forEach((oneProject) => {
+      jobs.forEach((oneJob) => {
         db.run(
-          "INSERT INTO projects (pid, pname, pyear, pdesc, ptype, pimgURL) VALUES (?, ?, ?, ?, ?, ?)",
-          [
-            oneProject.id,
-            oneProject.name,
-            oneProject.year,
-            oneProject.desc,
-            oneProject.type,
-            oneProject.url,
-          ],
+          "INSERT INTO jobs (jid, jname, jsyear, jeyear, jdesc) VALUES (?, ?, ?, ?, ?)",
+          [oneJob.id, oneJob.name, oneJob.syear, oneJob.eyear, oneJob.desc],
           (error) => {
             if (error) {
               console.log("ERROR: ", error);
             } else {
-              console.log("Line added into the projects table!");
+              console.log("Line added into the projects jobs!");
             }
           }
         );

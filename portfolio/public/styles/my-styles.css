@@ -197,3 +197,6 @@ h1#login {
   border-radius: 10px;
   border: 10px solid rgb(197, 209, 205);
 }
+.skillsPage a {
+  color: black;
+}

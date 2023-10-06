@@ -1,4 +1,4 @@
-<div class="backgroundBox">
+<div class="backgroundBox skillsPage">
   <div class="content columns">
     <div class="firstRowBoxes columns col-12 col-mx-auto">
       <div class="education column col-5 col-md-11">
@@ -24,10 +24,15 @@
       <div class="professional column col-5 col-md-11">
         <h3>Professional experience</h3>
         <ul>
-          <li>2021-2022 Factory worker at Rol Ergo</li>
-          <li>2020-2021 Factory Worker at FJ Sintermetall</li>
-          <li>2017 Cashier at ICA</li>
+          {{#each jobs}}
+            <li> {{jsyear}}-{{jeyear}}  <b>{{jname}}</b> <br>{{jdesc}}</li>
+          {{/each}}
         </ul>
+        {{#if isAdmin}}
+          <div>
+            <a href="/jobs/new">Add job</a>
+          </div>
+        {{/if}}
       </div>
     
    
@@ -35,7 +40,7 @@
         <h3>Computer Skills</h3>
         <ul>
           {{#each skills}}
-            <li> <b>{{sname}}</b> {{sdesc}}</li>
+            <li> <b>{{sname}}</b> <br>{{sdesc}}</li>
           {{/each}}
         </ul>
         {{#if isAdmin}}
