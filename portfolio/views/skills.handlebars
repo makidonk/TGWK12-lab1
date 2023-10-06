@@ -11,6 +11,16 @@
           </li>
         </ul>
       </div>
+      <div class="languages column col-5 col-md-11">
+        <h3>Languages</h3>
+        <ul>
+          <li>Native language: Swedish</li>
+          <li>Fluent: English</li>
+          <li>Limited understanding: Spanish, Danish, Norwegian</li>
+        </ul>
+      </div> 
+      </div>
+      <div class="secondRowBoxes columns col-12 col-mx-auto">
       <div class="professional column col-5 col-md-11">
         <h3>Professional experience</h3>
         <ul>
@@ -19,32 +29,22 @@
           <li>2017 Cashier at ICA</li>
         </ul>
       </div>
-    </div>
-    <div class="secondRowBoxes columns col-12 col-mx-auto">
+    
+   
       <div class="skills column col-5 col-md-11">
         <h3>Computer Skills</h3>
         <ul>
-          <li>Adobe Illustrator</li>
-          <li>Adobe inDesign</li>
-          <li>Adobe Photoshop</li>
-          <li>Figma</li>
-          <li>HTML</li>
-          <li>CSS</li>
-          <li>JavaScript</li>
-          <li>Premiere Pro</li>
-          <li></li>
-          <li></li>
+          {{#each skills}}
+            <li> <b>{{sname}}</b> {{sdesc}}</li>
+          {{/each}}
         </ul>
+        {{#if isAdmin}}
+          <div>
+            <a href="/skills/new">Add skill</a>
+          </div>
+        {{/if}}
       </div>
-
-      <div class="languages column col-5 col-md-11">
-        <h3>Languages</h3>
-        <ul>
-          <li>Native language: Swedish</li>
-          <li>Fluent: English</li>
-          <li>Limited understanding: Spanish, Danish, Norwegian</li>
-        </ul>
-      </div>
+</div>
     </div>
   </div>
 </div>

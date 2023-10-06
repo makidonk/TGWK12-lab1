@@ -69,22 +69,41 @@ app.get("/projects", (request, response) => {
   });
 });
 
-app.get("/skills", function (request, response) {
-  const model = {
-    isLoggedIn: request.session.isLoggedIn,
-    name: request.session.name,
-    isAdmin: request.session.isAdmin,
-  };
-  response.render("skills.handlebars", model);
-});
+app.get("/skills", (request, response) => {
+  db.all("SELECT * FROM skills", function (error, theSkills) {
+    if (error) {
+      const model = {
+        dbError: true,
+        theError: error,
+        skills: [],
+        isLoggedIn: request.session.isLoggedIn,
+        name: request.session.name,
+        isAdmin: request.session.isAdmin,
+      };
+      // renders the page with the model
+      response.render("skills.handlebars", model);
+    } else {
+      const model = {
+        dbError: false,
+        theError: "",
+        skills: theSkills,
+        isLoggedIn: request.session.isLoggedIn,
+        name: request.session.name,
+        isAdmin: request.session.isAdmin,
+      };
+      // renders the page with the model
+      response.render("skills.handlebars", model);
+    }
+  });
 
-app.get("/login", function (request, response) {
-  const model = {
-    isLoggedIn: request.session.isLoggedIn,
-    name: request.session.name,
-    isAdmin: request.session.isAdmin,
-  };
-  response.render("login.handlebars", model);
+  app.get("/login", (request, response) => {
+    const model = {
+      isLoggedIn: request.session.isLoggedIn,
+      name: request.session.name,
+      isAdmin: request.session.isAdmin,
+    };
+    response.render("login.handlebars", model);
+  });
 });
 
 app.get("/logout", function (request, response) {
@@ -363,6 +382,160 @@ app.post("/projects/modify/:id", (request, response) => {
     response.redirect("/login");
   }
 });
+
+// creates skills projects at startup
+db.run(
+  "CREATE TABLE skills (sid INTEGER PRIMARY KEY, sname TEXT NOT NULL, sdesc TEXT NOT NULL, stype TEXT NOT NULL)",
+  (error) => {
+    if (error) {
+      // tests error: display error
+      console.log("ERROR: ", error);
+    } else {
+      // tests error: no error, the table has been created
+      console.log("---> Table skills created!");
+
+      const skills = [
+        {
+          id: "1",
+          name: "Adobe Illustrator",
+          type: "Design",
+          desc: "Designing in Illustrator",
+        },
+        {
+          id: "2",
+          name: "Adobe inDesign",
+          type: "Design",
+          desc: "Designing in inDesign",
+        },
+        {
+          id: "3",
+          name: "Adobe Photoshop",
+          type: "Design",
+          desc: "Designing in Photoshop",
+        },
+        {
+          id: "4",
+          name: "Figma",
+          type: "Desing",
+          desc: "Making hi-fi prototypes in figma",
+        },
+        {
+          id: "5",
+          name: "Javascript",
+          type: "Programming language",
+          desc: "Programming with Javascript on the client side.",
+        },
+        {
+          id: "6",
+          name: "Node",
+          type: "Programming language",
+          desc: "Programming with Javascript on the server side.",
+        },
+        {
+          id: "7",
+          name: "Express",
+          type: "Framework",
+          desc: "A framework for programming Javascript on the server side.",
+        },
+        {
+          id: "8",
+          name: "HTML",
+          type: "Programming",
+          desc: "Programming with HTML",
+        },
+        {
+          id: "9",
+          name: "CSS",
+          type: "Programming Language",
+          desc: "Programming with CSS",
+        },
+        {
+          id: "10",
+          name: "Adobe Premiere pro",
+          type: "Design",
+          desc: "Edit videos with premiere pro",
+        },
+      ];
+
+      // inserts skills
+      skills.forEach((oneSkill) => {
+        db.run(
+          "INSERT INTO skills (sid, sname, sdesc, stype) VALUES (?, ?, ?, ?)",
+          [oneSkill.id, oneSkill.name, oneSkill.desc, oneSkill.type],
+          (error) => {
+            if (error) {
+              console.log("ERROR: ", error);
+            } else {
+              console.log("Line added into the skills table!");
+            }
+          }
+        );
+      });
+    }
+  }
+);
+
+//jobs
+db.run(
+  "CREATE TABLE jobs (jid INTEGER PRIMARY KEY, jname TEXT NOT NULL, jsyear INTEGER NOT NULL,jeyear INTEGER NOT NULL, pdesc TEXT NOT NULL)",
+  (error) => {
+    if (error) {
+      // tests error: display error
+      console.log("ERROR: ", error);
+    } else {
+      // tests error: no error, the table has been created
+      console.log("---> Table jobs created!");
+
+      const projects = [
+        {
+          id: "1",
+          name: "Pippi Långstrum Illustration",
+          year: 2022,
+          desc: "This is an illustration of pippi",
+          type: "illustrator",
+          url: "/img/Me.jpg",
+        },
+        {
+          id: "2",
+          name: "djur",
+          year: 2022,
+          desc: "This is an illustration of an animal",
+          type: "illustrator",
+          url: "/img/Me.jpg",
+        },
+        {
+          id: "3",
+          name: "Catch the students JavaScript game",
+          year: 2023,
+          desc: "This is a game made with javascript",
+          type: "Programming",
+          url: "/img/Me.jpg",
+        },
+      ];
+      // inserts projects
+      projects.forEach((oneProject) => {
+        db.run(
+          "INSERT INTO projects (pid, pname, pyear, pdesc, ptype, pimgURL) VALUES (?, ?, ?, ?, ?, ?)",
+          [
+            oneProject.id,
+            oneProject.name,
+            oneProject.year,
+            oneProject.desc,
+            oneProject.type,
+            oneProject.url,
+          ],
+          (error) => {
+            if (error) {
+              console.log("ERROR: ", error);
+            } else {
+              console.log("Line added into the projects table!");
+            }
+          }
+        );
+      });
+    }
+  }
+);
 
 app.use(function (req, res) {
   res.status(404).render("404.handlebars");

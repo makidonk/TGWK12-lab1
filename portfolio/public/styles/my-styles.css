@@ -5,13 +5,10 @@ p {
   font-family: "Indie Flower", sans-serif;
   font-size: 20px;
 }
-.skills ul {
-  column-count: 2;
-  column-gap: 10px;
-}
+
 li {
   font-family: "Indie Flower", sans-serif;
-  font-size: 20px;
+  font-size: max(1.5vw, 15px);
 }
 h1 {
   font-family: "Bricolage Grotesque", sans-serif;
@@ -169,7 +166,6 @@ nav h4:hover {
 .firstRowBoxes,
 .secondRowBoxes {
   max-width: 100%;
-  margin-top: 30px;
 }
 .education,
 .professional,
