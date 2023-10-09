@@ -1,6 +1,8 @@
 <header id="menu">
+
   <div class="headerContent">
     <nav>
+
       {{#if isLoggedIn}}
         <a href="/logout">
           <img src="/img/loggedin.svg" id="login-icon" />
@@ -11,10 +13,12 @@
           <img src="/img/login.svg" id="login-icon" />
         </a>
       {{/if}}
-      <a href="/"><h4>about</h4></a>
-      <a href="/projects"><h4 id="headerWorks">projects</h4></a>
-      <a href="/skills"><h4>skills</h4></a>
-
+      {{#if isLoggedIn}}
+        <a href="/"><h4>about</h4></a>
+        <a href="/projects"><h4 id="headerWorks">projects</h4></a>
+        <a href="/skills"><h4>skills</h4></a>
+      {{/if}}
     </nav>
   </div>
+
 </header>

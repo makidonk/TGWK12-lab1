@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const connectSqlite3 = require("connect-sqlite3");
 const sqlite3 = require("sqlite3");
 const SQLiteStore = connectSqlite3(session);
+const bcrypt = require("bcrypt");
 // defines handlebars engine
 app.engine("handlebars", engine());
 // defines the view engine to be handlebars
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const db = new sqlite3.Database("portfolio.db");
+//const hash = bcrypt.hashSync(password,10)
 
 app.use(
   session({
@@ -552,6 +554,62 @@ db.run(
               console.log("ERROR: ", error);
             } else {
               console.log("Line added into the projects jobs!");
+            }
+          }
+        );
+      });
+    }
+  }
+);
+
+//users database
+db.run(
+  "CREATE TABLE users (uid INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE, password TEXT NOT NULL)",
+  (error) => {
+    if (error) {
+      // tests error: display error
+      console.log("ERROR: ", error);
+    } else {
+      // tests error: no error, the table has been created
+      console.log("---> Table users created!");
+
+      const users = [
+        {
+          id: "1",
+          name: "Admin",
+          password: "1"
+        },
+        {
+          id: "2",
+          name: "user1",
+          password: "1"
+        },
+        {
+          id: "3",
+          name: "user2",
+          password: "2"
+        },
+        {
+          id: "4",
+          name: "user3",
+          password: "3"
+        },
+        {
+          id: "5",
+          name: "user4",
+          password: "4"
+        },
+      ];
+      // inserts projects
+      users.forEach((oneUser) => {
+        db.run(
+          "INSERT INTO users (uid, name, password) VALUES (?, ?, ?)",
+          [oneUser.id, oneUser.name, oneUser.password],
+          (error) => {
+            if (error) {
+              console.log("ERROR: ", error);
+            } else {
+              console.log("Line added into the projects users!");
             }
           }
         );
