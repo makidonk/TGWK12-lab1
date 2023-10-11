@@ -70,6 +70,41 @@ app.get("/projects", (request, response) => {
     }
   });
 });
+/* app.get("/projects/:pageNumber", (request, response) => {
+  // Calculate the total number of projects
+  db.get("SELECT COUNT(*) as totalProjects FROM projects", (error, result) => {
+    if (error) {
+      // Handle the error
+    } else {
+      const totalProjects = result.totalProjects;
+      const itemsPerPage = 3;
+      const pageNumber = parseInt(request.params.pageNumber, 10);
+      const totalPages = Math.ceil(totalProjects / itemsPerPage);
+
+      // Calculate the offset and limit
+      const offset = (pageNumber - 1) * itemsPerPage;
+      const limit = itemsPerPage;
+
+      // Query the database with the offset and limit
+      db.all(
+        "SELECT * FROM projects LIMIT ? OFFSET ?",
+        [limit, offset],
+        (error, projects) => {
+          if (error) {
+            // Handle the error
+          } else {
+            // Render the page with the projects and pagination information
+            response.render("projects.handlebars", {
+              projects,
+              pageNumber,
+              totalPages,
+            });
+          }
+        }
+      );
+    }
+  });
+}); */
 
 app.get("/skills", (request, response) => {
   // Retrieve data from the "skills" table
@@ -145,7 +180,7 @@ app.post(`/login`, (request, response) => {
     } else {
       const passwordsMatch = bcrypt.compareSync(pw, user.password);
       if (passwordsMatch) {
-        if (un === "admin") {
+        if (un === "Admin") {
           request.session.isAdmin = true;
         } else {
           request.session.isAdmin = false;
@@ -249,6 +284,22 @@ db.run(
         },
         {
           id: "3",
+          name: "Catch the students JavaScript game",
+          year: 2023,
+          desc: "This is a game made with javascript",
+          type: "Programming",
+          url: "/img/Me.jpg",
+        },
+        {
+          id: "4",
+          name: "Sweats & Smiles Magazine",
+          year: 2023,
+          desc: "This is a game made with javascript",
+          type: "Programming",
+          url: "/img/magazine.png",
+        },
+        {
+          id: "5",
           name: "Catch the students JavaScript game",
           year: 2023,
           desc: "This is a game made with javascript",

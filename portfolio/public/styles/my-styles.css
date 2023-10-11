@@ -200,3 +200,51 @@ h1#login {
 .skillsPage a {
   color: black;
 }
+.projectCards {
+  max-width: 330px;
+  min-height: 550px;
+}
+.newProject a {
+  font-size: 20px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  color: black;
+  background-color: rgb(197, 209, 205);
+  padding: 2px;
+  padding-right: 4px;
+  padding-left: 4px;
+}
+.newProject a:hover {
+  text-decoration: none;
+  padding: 6px;
+  color: white;
+}
+.newProject {
+  margin: 10px;
+  margin-top: 20px;
+}
+h3#name {
+  font-size: 22px;
+  line-height: 26px;
+  text-align: center;
+}
+h3#yeartype {
+  font-size: 18px;
+  line-height: 15px;
+  text-align: center;
+}
+
+.cardFooter a {
+  font-size: 20px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  color: black;
+  background-color: rgb(197, 209, 205);
+  padding: 2px;
+  padding-right: 4px;
+  padding-left: 4px;
+}
+
+.cardFooter a:hover {
+  text-decoration: none;
+  padding: 6px;
+  color: white;
+}

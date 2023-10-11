@@ -25,7 +25,7 @@
         <h3>Professional experience</h3>
         <ul>
           {{#each jobs}}
-            <li> {{jsyear}}-{{jeyear}}  <b>{{jname}}</b> <br>{{jdesc}} <a href="/jobs/modify/{{jid}}">modify</a>  <a href="/jobs/delete/{{jid}}">delete</a>  </li>
+            <li> {{jsyear}}-{{jeyear}}  <b>{{jname}}</b> <br>{{jdesc}} {{#if ../isAdmin}} <a href="/jobs/modify/{{jid}}">modify</a>  <a href="/jobs/delete/{{jid}}">delete</a> {{/if}} </li>
           {{/each}}
         </ul>
         {{#if isAdmin}}
@@ -40,7 +40,7 @@
         <h3>Computer Skills</h3>
         <ul>
           {{#each skills}}
-            <li> <b>{{sname}}</b> <br>{{sdesc}}  <a href="/skills/modify/{{sid}}">modify</a>  <a href="/skills/delete/{{sid}}">delete</a> </li>
+            <li> <b>{{sname}}</b> <br>{{sdesc}}  {{#if ../isAdmin}} <a href="/skills/modify/{{sid}}">modify</a>  <a href="/skills/delete/{{sid}}">delete</a> {{/if}} </li>
           {{/each}}
         </ul>
         {{#if isAdmin}}
