@@ -134,22 +134,33 @@ app.post(`/login`, (request, response) => {
   var post_data = JSON.stringify(request.body);
   console.log("POST data", post_data);
 
-  const login = request.body.un;
-  const password = request.body.pw;
-  console.log("recieved : " + login + `/` + password);
-  if (login === "admin" && password === "1") {
-    console.log("admin is logged in!");
-    request.session.isAdmin = true;
-    request.session.isLoggedIn = true;
-    request.session.name = "admin";
-    response.redirect("/");
-  } else {
-    console.log("wrong username or password");
-    request.session.isAdmin = false;
-    request.session.isLoggedIn = false;
-    request.session.name = "";
-    response.redirect("/login");
-  }
+  const { un, pw } = request.body;
+
+  db.get("SELECT * FROM users WHERE name = ?", [un], function (err, user) {
+    if (err) {
+      console.log("error while logging in");
+      response.status(500).send({ error: "server error" });
+    } else if (!user) {
+      response.status(401).send({ error: "user not found" });
+    } else {
+      const passwordsMatch = bcrypt.compareSync(pw, user.password);
+      if (passwordsMatch) {
+        if (un === "admin") {
+          request.session.isAdmin = true;
+        } else {
+          request.session.isAdmin = false;
+        }
+        request.session.user = user;
+        request.session.isLoggedIn = true;
+        request.session.name = un;
+        response.redirect("/");
+      } else {
+        console.log("not right username or password");
+        request.session.isLoggedIn = false;
+        request.session.isAdmin = false;
+      }
+    }
+  });
 });
 
 //logout
@@ -160,6 +171,52 @@ app.get("/logout", function (request, response) {
 
   console.log("logged out");
   response.redirect("/");
+});
+
+//Register
+app.get("/login/register", (request, response) => {
+  const model = {
+    isLoggedIn: request.session.isLoggedIn,
+    name: request.session.name,
+    isAdmin: request.session.isAdmin,
+  };
+  response.render("register.handlebars", model);
+});
+app.post("/login/register", (request, response) => {
+  const username = request.body.un;
+  const password = request.body.pw;
+  //check so its not the same username!
+
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) {
+      console.log("Password hashing error:", err);
+      response.redirect("/login/register");
+    } else {
+      // Insert the new user with the hashed password into the database
+      db.run(
+        "INSERT INTO users (name, password) VALUES (?, ?)",
+        [username, hashedPassword],
+        (error) => {
+          if (error) {
+            console.log("Database insertion error:", error);
+          } else {
+            console.log("line added to users table");
+          }
+          response.redirect("/login");
+        }
+      );
+    }
+  });
+});
+
+//delete profile
+app.get("/login/delete", (request, response) => {
+  const model = {
+    isLoggedIn: request.session.isLoggedIn,
+    name: request.session.name,
+    isAdmin: request.session.isAdmin,
+  };
+  response.render("delete.handlebars", model);
 });
 
 //projects database
@@ -264,13 +321,13 @@ app.post("/projects/new", (request, response) => {
 });
 
 //delete a project
-app.get(`/projects/delete/:id`, (request, response) => {
+app.get("/projects/delete/:id", (request, response) => {
   const id = request.params.id;
   if (request.session.isLoggedIn == true && request.session.isAdmin == true) {
     db.run(
       "DELETE FROM projects WHERE pid=?",
       [id],
-      function (error, projects) {
+      function (error, theProjects) {
         if (error) {
           const model = {
             dbError: true,
@@ -288,35 +345,8 @@ app.get(`/projects/delete/:id`, (request, response) => {
             name: request.session.name,
             isAdmin: request.session.isAdmin,
           };
-          response.render("projects.handlebars", model);
+          response.redirect("/projects");
         }
-      }
-    );
-  } else {
-    response.redirect("/login");
-  }
-});
-app.post("/projects/update/:id", (request, response) => {
-  const id = request.params.id;
-  const newp = [
-    request.body.projectName,
-    request.body.projectImg,
-    request.body.projectDesc,
-    request.body.projectDate,
-    request.body.userFK,
-    id,
-  ];
-  if (request.session.isLoggedIn == true && request.session.isAdmin == true) {
-    db.run(
-      "UPDATE projects SET projectName=?, projectImg=?, projectDesc=?, projectDate=?, userFK=?",
-      newp,
-      (error) => {
-        if (error) {
-          console.log("ERROR: ", error);
-        } else {
-          console.log("Project updated!");
-        }
-        response.redirect("/projects");
       }
     );
   } else {
@@ -496,6 +526,129 @@ db.run(
   }
 );
 
+//add skill
+app.get("/skills/new", function (request, response) {
+  if (request.session.isLoggedIn == true && request.session.isAdmin == true) {
+    const model = {
+      isLoggedIn: request.session.isLoggedIn,
+      name: request.session.name,
+      isAdmin: request.session.isAdmin,
+    };
+    response.render("newSkill.handlebars", model);
+  } else {
+    response.redirect("/login");
+  }
+});
+app.post("/skills/new", (request, response) => {
+  const news = [
+    request.body.skillname,
+    request.body.skilldesc,
+    request.body.skilltype,
+  ];
+  if (request.session.isLoggedIn == true && request.session.isAdmin == true) {
+    db.run(
+      "INSERT INTO skills (sname, sdesc, stype) VALUES (?,?,?)",
+      news,
+      (error) => {
+        if (error) {
+          console.log("ERROR:", error);
+        } else {
+          console.log("line added to skills table");
+        }
+        response.redirect("/skills");
+      }
+    );
+  } else {
+    response.redirect("/login");
+  }
+});
+
+//modify skill
+app.get("/skills/modify/:id", (request, response) => {
+  const id = request.params.id;
+  db.get("SELECT * FROM skills WHERE sid=?", [id], function (error, theSkills) {
+    if (error) {
+      console.log("ERROR:", error);
+      const model = {
+        dbError: true,
+        theError: error,
+        skill: {},
+        isLoggedIn: request.session.isLoggedIn,
+        name: request.session.name,
+        isAdmin: request.session.isAdmin,
+      };
+      response.render("modifySkills.handlebars", model);
+    } else {
+      const model = {
+        dbError: false,
+        theError: "",
+        skill: theSkills,
+        isLoggedIn: request.session.isLoggedIn,
+        name: request.session.name,
+        isAdmin: request.session.isAdmin,
+        helpers: {
+          theTypeD(value) {
+            return value == "Design";
+          },
+          theTypeP(value) {
+            return value == "Programming language";
+          },
+          theTypeF(value) {
+            return value == "Framework";
+          },
+        },
+      };
+      response.render("modifySkills.handlebars", model);
+    }
+  });
+});
+app.post("/skills/modify/:id", (request, response) => {
+  const id = request.params.id;
+  const news = [request.body.skillname, request.body.skilldesc, id];
+  if (request.session.isLoggedIn == true && request.session.isAdmin == true) {
+    db.run("UPDATE skills SET sname=?, sdesc=? WHERE sid=?", news, (error) => {
+      if (error) {
+        console.log("ERROR: ", error);
+      } else {
+        console.log("skill updated!");
+      }
+      response.redirect("/skills");
+    });
+  } else {
+    response.redirect("/login");
+  }
+});
+
+//delete skill
+app.get("/skills/delete/:id", (request, response) => {
+  const id = request.params.id;
+  if (request.session.isLoggedIn == true && request.session.isAdmin == true) {
+    db.run("DELETE FROM skills WHERE sid=?", [id], function (error, theSkills) {
+      if (error) {
+        const model = {
+          dbError: true,
+          theError: error,
+          isLoggedin: request.session.isLoggedIn,
+          name: request.session.name,
+          isAdmin: request.session.isAdmin,
+        };
+        response.render("skills.handlebars", model);
+      } else {
+        const model = {
+          dbError: false,
+          theError: "",
+          isLoggedin: request.session.isLoggedIn,
+          name: request.session.name,
+          isAdmin: request.session.isAdmin,
+        };
+        response.redirect("/skills");
+      }
+    });
+  } else {
+    response.redirect("/login");
+  }
+});
+
 //jobs database
 db.run(
   "CREATE TABLE jobs (jid INTEGER PRIMARY KEY, jname TEXT NOT NULL, jsyear INTEGER NOT NULL,jeyear INTEGER NOT NULL, jdesc TEXT NOT NULL)",
@@ -561,6 +714,72 @@ db.run(
     }
   }
 );
+//add job
+app.get("/jobs/new", function (request, response) {
+  if (request.session.isLoggedIn == true && request.session.isAdmin == true) {
+    const model = {
+      isLoggedIn: request.session.isLoggedIn,
+      name: request.session.name,
+      isAdmin: request.session.isAdmin,
+    };
+    response.render("newJob.handlebars", model);
+  } else {
+    response.redirect("/login");
+  }
+});
+app.post("/jobs/new", (request, response) => {
+  const newj = [
+    request.body.jobname,
+    request.body.jobdesc,
+    request.body.jsyear,
+    request.body.jeyear,
+  ];
+  if (request.session.isLoggedIn == true && request.session.isAdmin == true) {
+    db.run(
+      "INSERT INTO jobs (jname, jdesc, jsyear, jeyear ) VALUES (?,?,?, ?)",
+      newj,
+      (error) => {
+        if (error) {
+          console.log("ERROR:", error);
+        } else {
+          console.log("line added to jobs table");
+        }
+        response.redirect("/skills");
+      }
+    );
+  } else {
+    response.redirect("/login");
+  }
+});
+//delete job
+app.get("/jobs/delete/:id", (request, response) => {
+  const id = request.params.id;
+  if (request.session.isLoggedIn == true && request.session.isAdmin == true) {
+    db.run("DELETE FROM jobs WHERE jid=?", [id], function (error, theJobs) {
+      if (error) {
+        const model = {
+          dbError: true,
+          theError: error,
+          isLoggedin: request.session.isLoggedIn,
+          name: request.session.name,
+          isAdmin: request.session.isAdmin,
+        };
+        response.render("skills.handlebars", model);
+      } else {
+        const model = {
+          dbError: false,
+          theError: "",
+          isLoggedin: request.session.isLoggedIn,
+          name: request.session.name,
+          isAdmin: request.session.isAdmin,
+        };
+        response.redirect("/skills");
+      }
+    });
+  } else {
+    response.redirect("/login");
+  }
+});
 
 //users database
 db.run(
@@ -577,34 +796,35 @@ db.run(
         {
           id: "1",
           name: "Admin",
-          password: "1"
+          password: "1",
         },
         {
           id: "2",
           name: "user1",
-          password: "1"
+          password: "1",
         },
         {
           id: "3",
           name: "user2",
-          password: "2"
+          password: "2",
         },
         {
           id: "4",
           name: "user3",
-          password: "3"
+          password: "3",
         },
         {
           id: "5",
           name: "user4",
-          password: "4"
+          password: "4",
         },
       ];
       // inserts projects
-      users.forEach((oneUser) => {
+      users.forEach(async (oneUser) => {
+        const hashUserPassword = await bcrypt.hash(oneUser.password, 10);
         db.run(
           "INSERT INTO users (uid, name, password) VALUES (?, ?, ?)",
-          [oneUser.id, oneUser.name, oneUser.password],
+          [oneUser.id, oneUser.name, hashUserPassword],
           (error) => {
             if (error) {
               console.log("ERROR: ", error);

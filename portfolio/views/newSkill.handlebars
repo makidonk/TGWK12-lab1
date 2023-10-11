@@ -1,0 +1,46 @@
+<div class="backgroundBox">
+  <div>
+    <h1>Add new skill</h1>
+    {{#if isLoggedIn}}
+      {{#if isAdmin}}
+        <form action="/skills/new" method="post">
+          <fieldset>
+            <label for="skillname">skill name</label>
+            <br />
+            <input
+              type="text"
+              name="skillname"
+              id="skillname"
+              required="required"
+            />
+            <br />
+            <label for="skilldesc">skill description</label><br />
+            <textarea
+              name="skilldesc"
+              id="skilldesc"
+              cols="30"
+              rows="10"
+              required="required"
+            >
+
+            </textarea>
+            <br />
+            <label for="skilltype">skill type</label><br />
+            <select name="skilltype" id="skilltype" required="required">
+              <option value="Design">Design</option>
+              <option value="Framework">Design</option>
+              <option value="Programming Language">Programming Language</option>
+            </select>
+            <br />
+          </fieldset>
+          <input type="submit" value="add skill" />
+        </form>
+      {{else}}
+        <h2>Sorry, you need to be an administer to add a new skill!</h2>
+      {{/if}}
+    {{else}}
+      <h2>Sorry, you need to be logged in to add a new skill!</h2>
+      <h2>Please go to the <a href="/login">login</a> page</h2>
+    {{/if}}
+  </div>
+</div>

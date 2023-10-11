@@ -1,0 +1,57 @@
+<div class="backgroundBox">
+  <div>
+    <h1>Add new job</h1>
+    {{#if isLoggedIn}}
+      {{#if isAdmin}}
+        <form action="/jobs/new" method="post">
+          <fieldset>
+            <label for="jobname">job name</label>
+            <br />
+            <input
+              type="text"
+              name="jobname"
+              id="jobname"
+              required="required"
+            />
+            <br />
+            <label for="jobdesc">job description</label><br />
+            <textarea
+              name="jobdesc"
+              id="jobdesc"
+              cols="30"
+              rows="10"
+              required="required"
+            >
+            </textarea>
+            <br />
+            <label for="jsyear">job start year</label>
+            <br />
+            <input
+              type="number"
+              name="jsyear"
+              id="jsyear"
+              required="required"
+            />
+            <br />
+
+            <label for="jeyear">job end year</label>
+            <br />
+            <input
+              type="number"
+              name="jeyear"
+              id="jeyear"
+              required="required"
+            />
+            <br />
+          </fieldset>
+          <input type="submit" value="add job" />
+        </form>
+      {{else}}
+        <h2>Sorry, you need to be an administer to add a new job!</h2>
+      {{/if}}
+    {{else}}
+      <h2>Sorry, you need to be logged in to add a new job!</h2>
+      <h2>Please go to the <a href="/login">login</a> page</h2>
+    {{/if}}
+  </div>
+</div>

@@ -1,8 +1,8 @@
 <div class="backgroundBox">
   <div>
-    <h1 id="login">login</h1>
+    <h1>Delete your profile</h1>
     <div class="loginBox">
-      <form action="/login" method="post" id="formlogin">
+      <form action="/login/delete" method="post" id="formdelete">
         <fieldset>
 
           <label for="un">Username<br /></label>
@@ -12,14 +12,10 @@
           <input type="password" id="pw" name="pw" required="required" />
           <br />
         </fieldset>
-        <input type="submit" value="Log in" />
+        <input type="submit" value="Delete" />
 
       </form>
-      <div> or <a href="/login/register">register</a></div>
-      <div>
-        do you want to
-        <a href="/login/delete">delete</a>
-        your account?</div>
+      <div> <a href="/login">Back</a></div>
     </div>
 
   </div>

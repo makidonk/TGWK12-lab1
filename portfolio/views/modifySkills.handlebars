@@ -1,0 +1,49 @@
+<div class="backgroundBox">
+  <div>
+    <h1>Modify Skill {{skill.sname}}</h1>
+    {{#if isLoggedIn}}
+      {{#if isAdmin}}
+        <form action="/skills/modify/{{skill.sid}}" method="post">
+          <fieldset>
+            <label for="skillname">Skill name</label>
+            <br />
+            <input
+              type="text"
+              name="skillname"
+              id="skillname"
+              required="required"
+              value="{{skill.sname}}"
+            />
+            <br />
+            <label for="skilldesc">Skill description</label><br />
+            <textarea
+              name="skilldesc"
+              id="skilldesc"
+              cols="30"
+              rows="10"
+              required="required"
+            >
+              {{skill.sdesc}}
+            </textarea>
+            <br />
+              <label for="skilltype">skill type</label><br />
+                <select name="skilltype" id="skilltype" required="required"> 
+                    <option value="Design"{{#if (theTypeD skill.stype)}} selected="selected"{{/if}}>Design</option>
+                    <option value="Programming language"{{#if (theTypeP skill.stype)}} selected="selected"{{/if}}>Programming language</option>
+                    <option value="Framework"{{#if (theTypeF skill.stype)}} selected="selected"{{/if}}>Framework</option>
+                            
+                </select>   
+            <br />
+
+          </fieldset>
+          <input type="submit" value="Update skill" />
+        </form>
+      {{else}}
+        <p>Sorry, you need to be an admin to update a project</p>
+      {{/if}}
+    {{else}}
+      <h2>Sorry, you need to be logged in to add a new project!</h2>
+      <h2>Please go to the <a href="/login">login</a> page</h2>
+    {{/if}}
+  </div>
+</div>
