@@ -15,9 +15,11 @@ h1 {
   font-size: 50px;
   margin-bottom: 0px;
   line-height: 32px;
-  color: rgb(197, 209, 205);
+  color: black;
   margin-top: 80px;
+  margin-bottom: 20px;
 }
+
 h2 {
   font-family: "Bricolage Grotesque", sans-serif;
 }
@@ -185,8 +187,42 @@ nav h4:hover {
   width: 300px;
   height: 350px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
 h1#login {
+  color: black;
+  text-align: center;
+}
+
+input {
+  border-style: none;
+  border-radius: 2px;
+}
+
+input[type="submit"] {
+  font-size: 20px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  color: black;
+  background-color: rgb(197, 209, 205);
+  padding: 2px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+input[type="submit"]:hover {
+  text-decoration: none;
+
+  color: white;
+}
+
+.loginFooter {
+  justify-content: flex-end;
+}
+.loginFooter a {
+  font-weight: 600;
   color: black;
 }
 
@@ -198,12 +234,35 @@ h1#login {
   border: 10px solid rgb(197, 209, 205);
 }
 .skillsPage a {
+  font-size: 20px;
+  font-family: "Bricolage Grotesque", sans-serif;
   color: black;
+  background-color: white;
+  padding: 2px;
+  padding-right: 4px;
+  padding-left: 4px;
+}
+
+.skillsPage a:hover {
+  text-decoration: none;
+  padding: 6px;
+  color: rgb(197, 209, 205);
+}
+.skillsPage {
+  margin-top: 30px;
 }
 .projectCards {
   max-width: 330px;
-  min-height: 550px;
+  min-height: 450px;
 }
+
+.projectCards a {
+  color: black;
+}
+.projectCards a:hover {
+  text-decoration: none;
+}
+
 .newProject a {
   font-size: 20px;
   font-family: "Bricolage Grotesque", sans-serif;
@@ -247,4 +306,27 @@ h3#yeartype {
   text-decoration: none;
   padding: 6px;
   color: white;
+}
+
+.infoImage {
+  display: flex;
+  justify-content: center;
+  object-fit: cover;
+  padding: 10px;
+}
+
+#infoImage {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 10px solid rgb(197, 209, 205);
+}
+h1#project {
+  font-size: 40px;
+  line-height: 45px;
+}
+#back a {
+  margin-top: 20px;
+  color: black;
 }

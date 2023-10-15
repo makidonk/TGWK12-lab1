@@ -106,6 +106,38 @@ app.get("/projects", (request, response) => {
   });
 }); */
 
+app.get("/projects/:id", (request, response) => {
+  const id = request.params.id;
+  db.get(
+    "SELECT * FROM projects WHERE pid=?",
+    [id],
+    function (error, theProjects) {
+      if (error) {
+        console.log("ERROR:", error);
+        const model = {
+          dbError: true,
+          theError: error,
+          project: {},
+          isLoggedIn: request.session.isLoggedIn,
+          name: request.session.name,
+          isAdmin: request.session.isAdmin,
+        };
+        response.render("projects.handlebars", model);
+      } else {
+        const model = {
+          dbError: false,
+          theError: "",
+          project: theProjects,
+          isLoggedIn: request.session.isLoggedIn,
+          name: request.session.name,
+          isAdmin: request.session.isAdmin,
+        };
+        response.render("projectInfo.handlebars", model);
+      }
+    }
+  );
+});
+
 app.get("/skills", (request, response) => {
   // Retrieve data from the "skills" table
   db.all("SELECT * FROM skills", function (skillsError, skillsResult) {
@@ -268,9 +300,9 @@ db.run(
       const projects = [
         {
           id: "1",
-          name: "Pippi Långstrum Illustration",
+          name: "Pippi Långstrump Illustration",
           year: 2022,
-          desc: "This is an illustration of pippi",
+          desc: "This is an illustration I made in a course called Foundations of Graphic Design. The assignment was to create a very simplified version of anything, but still keeping it recognizable. I chose to do Pippi Longstocking, and started to gather images of her and her animals. I then used Procreate to try different placements until i found the current one. After that i traced the silhouettes and transferred the outline to Illustrator. There i traced it and chose colors.",
           type: "illustrator",
           url: "/img/stylization.png",
         },
@@ -278,17 +310,17 @@ db.run(
           id: "2",
           name: "djur",
           year: 2022,
-          desc: "This is an illustration of an animal",
+          desc: "This is an illustration I made of my friends dog Bosse! She asked me to create a simplified illustration of him and sent me a couple of pictures. I then chose one of them and started to block in colors.",
           type: "illustrator",
-          url: "/img/Me.jpg",
+          url: "/img/animalPainting.jpg",
         },
         {
           id: "3",
           name: "Catch the students JavaScript game",
           year: 2023,
-          desc: "This is a game made with javascript",
+          desc: "This is a game I and my friend made with JavaScript for an assignment in my course Foundations of Programming. We started by brainstorming ideas and came up with the idea of dragging students into a classroom. We illustrated the whole interface using Illustrator, and coded in Visual studio code using JavaScript p5canvas, html and css",
           type: "Programming",
-          url: "/img/Me.jpg",
+          url: "/img/game.png",
         },
         {
           id: "4",

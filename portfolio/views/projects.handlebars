@@ -1,7 +1,7 @@
 
   <div class="backgroundBox p-centered">
     <div>
-      <h1 class="text-center">Projects</h1>
+      <h1 class="text-center header">Projects</h1>
       {{#if isAdmin}}
         <div class="newProject text-center">
           <a  href="/projects/new">New project</a>
@@ -14,18 +14,21 @@
         
           {{#each projects}}
           <div class="projectCards column ">
+            <a href="/projects/{{pid}}">
             <div class="projectCard column col-mx-auto">
               <img src="{{pimgURL}}" class="projectImage"/>
               <h3 id="name">{{pname}} </h3>
                <h3 id="yeartype">{{pyear}} |  {{ptype}} </h3>
                
             </div>
+             </a>
             <div class="cardFooter text-center">
               {{#if ../isAdmin}}
               <a href = "/projects/modify/{{pid}}">Modify</a>
               <a href="/projects/delete/{{pid}}" >Delete</a>
               {{/if}}
             </div>
+           
           </div>
           {{/each}}
         {{/if}}
