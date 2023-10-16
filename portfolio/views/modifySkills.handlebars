@@ -1,10 +1,12 @@
 <div class="backgroundBox">
   <div>
+    <br />
+    <h2 id="back"><a href="/skills">back</a> </h2>
     <h1>Modify Skill {{skill.sname}}</h1>
     {{#if isLoggedIn}}
       {{#if isAdmin}}
         <form action="/skills/modify/{{skill.sid}}" method="post">
-          <fieldset>
+          <fieldset class="db">
             <label for="skillname">Skill name</label>
             <br />
             <input

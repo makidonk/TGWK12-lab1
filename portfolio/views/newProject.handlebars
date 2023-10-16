@@ -1,12 +1,13 @@
 <div class="backgroundBox">
   <div>
+    <br />
+    <h2 id="back"><a href="/projects">back</a> </h2>
     <h1>Add new project</h1>
     {{#if isLoggedIn}}
       {{#if isAdmin}}
         <form action="/projects/new" method="post">
-          <fieldset>
+          <fieldset class="db">
             <label for="projname">Project name</label>
-            <br />
             <input
               type="text"
               name="projname"
@@ -14,8 +15,8 @@
               required="required"
             />
             <br />
+
             <label for="projyear">Project year</label>
-            <br />
             <input
               type="number"
               name="projyear"
@@ -23,7 +24,8 @@
               required="required"
             />
             <br />
-            <label for="projdesc">Project description</label><br />
+            
+            <label for="projdesc">Project description</label>
             <textarea
               name="projdesc"
               id="projdesc"
@@ -34,7 +36,7 @@
 
             </textarea>
             <br />
-            <label for="projtype">Project type</label><br />
+            <label for="projtype">Project type</label>
             <select name="projtype" id="projtype" required="required">
               <option value="Illustrator">Illustrator</option>
               <option value="Photoshop">Photoshop</option>
@@ -48,7 +50,7 @@
               >Indesign&Illustrator</option>
             </select>
             <br />
-            <label for="projimg">Project image url:</label><br />
+            <label for="projimg">Project image url:</label>
             <input
               type="text"
               name="projimg"

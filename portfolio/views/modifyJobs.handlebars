@@ -2,21 +2,22 @@
   <div>
     <br />
     <h2 id="back"><a href="/skills">back</a> </h2>
-    <h1>Add new job</h1>
+    <h1>Modify Job {{job.sname}}</h1>
     {{#if isLoggedIn}}
       {{#if isAdmin}}
-        <form action="/jobs/new" method="post">
+        <form action="/jobs/modify/{{job.jid}}" method="post">
           <fieldset class="db">
-            <label for="jobname">job name</label>
-            
+            <label for="jobname">Job name</label>
+
             <input
               type="text"
               name="jobname"
               id="jobname"
               required="required"
+              value="{{job.jname}}"
             />
             <br />
-            <label for="jobdesc">job description</label>
+            <label for="jobdesc">Job description</label><br />
             <textarea
               name="jobdesc"
               id="jobdesc"
@@ -24,32 +25,32 @@
               rows="10"
               required="required"
             >
+              {{job.jdesc}}
             </textarea>
             <br />
-            <label for="jsyear">job start year</label>
-            
+            <label for="jobsyear">Job starting year</label>
             <input
-              type="number"
-              name="jsyear"
-              id="jsyear"
+              type="text"
+              name="jobsyear"
+              id="jobsyear"
               required="required"
+              value="{{job.jsyear}}"
             />
             <br />
-
-            <label for="jeyear">job end year</label>
-            
+            <label for="jobeyear">Job ending year</label>
             <input
-              type="number"
-              name="jeyear"
-              id="jeyear"
+              type="text"
+              name="jobeyear"
+              id="jobeyear"
               required="required"
+              value="{{job.jeyear}}"
             />
             <br />
           </fieldset>
-          <input type="submit" value="add job" />
+          <input type="submit" value="Update job" />
         </form>
       {{else}}
-        <h2>Sorry, you need to be an administer to add a new job!</h2>
+        <p>Sorry, you need to be an admin to update a job</p>
       {{/if}}
     {{else}}
       <h2>Sorry, you need to be logged in to add a new job!</h2>

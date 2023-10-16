@@ -1,12 +1,14 @@
 <div class="backgroundBox">
   <div>
+    <br />
+    <h2 id="back"><a href="/skills">back</a> </h2>
     <h1>Add new skill</h1>
     {{#if isLoggedIn}}
       {{#if isAdmin}}
         <form action="/skills/new" method="post">
-          <fieldset>
+          <fieldset class="db">
             <label for="skillname">skill name</label>
-            <br />
+
             <input
               type="text"
               name="skillname"
@@ -14,7 +16,7 @@
               required="required"
             />
             <br />
-            <label for="skilldesc">skill description</label><br />
+            <label for="skilldesc">skill description</label>
             <textarea
               name="skilldesc"
               id="skilldesc"
@@ -25,7 +27,7 @@
 
             </textarea>
             <br />
-            <label for="skilltype">skill type</label><br />
+            <label for="skilltype">skill type</label>
             <select name="skilltype" id="skilltype" required="required">
               <option value="Design">Design</option>
               <option value="Framework">Design</option>

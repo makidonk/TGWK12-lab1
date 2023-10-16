@@ -1,0 +1,46 @@
+
+
+
+
+
+
+
+<h1>Modify example</h1>
+<form action="/examples/modify/{{example.id}}" method="post">
+    <fieldset>
+
+    <label for="x">x value</label>
+    <textarea
+        name="x"
+        id="x"
+        cols="10"
+        rows="10"
+        required="required"
+    >
+        {{example.x}}
+    </textarea>
+    
+    <label for="y">y valuw</label>
+    <input
+        type="number"
+        name="y"
+        id="y"
+        required="required"
+        value="{{example.y}}"
+    />
+    
+    <label for="z">z value</label>
+        <select name="z" id="z" required="required"> 
+            <option value="option1"{{#if (option1 example.z)}} selected="selected"{{/if}}>option1</option>
+            <option value="option2"{{#if (option2 example.z)}} selected="selected"{{/if}}>option2</option>
+            <option value="option3"{{#if (option3 example.z)}} selected="selected"{{/if}}>option3</option>
+        </select>  
+    <br />
+
+    </fieldset>
+    <input type="submit" value="modify example" />
+</form>
+
+
+
+

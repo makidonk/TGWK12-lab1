@@ -1,10 +1,12 @@
 <div class="backgroundBox">
   <div>
+    <br />
+    <h2 id="back"><a href="/projects">back</a> </h2>
     <h1>Modify Project {{project.pname}}</h1>
     {{#if isLoggedIn}}
       {{#if isAdmin}}
         <form action="/projects/modify/{{project.pid}}" method="post">
-          <fieldset>
+          <fieldset class="db">
             <label for="projname">Project name</label>
             <br />
             <input

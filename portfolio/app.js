@@ -4,7 +4,6 @@ const port = 8090; // defines the port
 const app = express(); // creates the Express application
 const session = require("express-session");
 const bodyParser = require("body-parser"); // Import body-parser
-const cookieParser = require("cookie-parser");
 const connectSqlite3 = require("connect-sqlite3");
 const sqlite3 = require("sqlite3");
 const SQLiteStore = connectSqlite3(session);
@@ -69,73 +68,6 @@ app.get("/projects", (request, response) => {
       response.render("projects.handlebars", model);
     }
   });
-});
-/* app.get("/projects/:pageNumber", (request, response) => {
-  // Calculate the total number of projects
-  db.get("SELECT COUNT(*) as totalProjects FROM projects", (error, result) => {
-    if (error) {
-      // Handle the error
-    } else {
-      const totalProjects = result.totalProjects;
-      const itemsPerPage = 3;
-      const pageNumber = parseInt(request.params.pageNumber, 10);
-      const totalPages = Math.ceil(totalProjects / itemsPerPage);
-
-      // Calculate the offset and limit
-      const offset = (pageNumber - 1) * itemsPerPage;
-      const limit = itemsPerPage;
-
-      // Query the database with the offset and limit
-      db.all(
-        "SELECT * FROM projects LIMIT ? OFFSET ?",
-        [limit, offset],
-        (error, projects) => {
-          if (error) {
-            // Handle the error
-          } else {
-            // Render the page with the projects and pagination information
-            response.render("projects.handlebars", {
-              projects,
-              pageNumber,
-              totalPages,
-            });
-          }
-        }
-      );
-    }
-  });
-}); */
-
-app.get("/projects/:id", (request, response) => {
-  const id = request.params.id;
-  db.get(
-    "SELECT * FROM projects WHERE pid=?",
-    [id],
-    function (error, theProjects) {
-      if (error) {
-        console.log("ERROR:", error);
-        const model = {
-          dbError: true,
-          theError: error,
-          project: {},
-          isLoggedIn: request.session.isLoggedIn,
-          name: request.session.name,
-          isAdmin: request.session.isAdmin,
-        };
-        response.render("projects.handlebars", model);
-      } else {
-        const model = {
-          dbError: false,
-          theError: "",
-          project: theProjects,
-          isLoggedIn: request.session.isLoggedIn,
-          name: request.session.name,
-          isAdmin: request.session.isAdmin,
-        };
-        response.render("projectInfo.handlebars", model);
-      }
-    }
-  );
 });
 
 app.get("/skills", (request, response) => {
@@ -308,7 +240,7 @@ db.run(
         },
         {
           id: "2",
-          name: "djur",
+          name: "Animal Illustration",
           year: 2022,
           desc: "This is an illustration I made of my friends dog Bosse! She asked me to create a simplified illustration of him and sent me a couple of pictures. I then chose one of them and started to block in colors.",
           type: "illustrator",
@@ -319,7 +251,7 @@ db.run(
           name: "Catch the students JavaScript game",
           year: 2023,
           desc: "This is a game I and my friend made with JavaScript for an assignment in my course Foundations of Programming. We started by brainstorming ideas and came up with the idea of dragging students into a classroom. We illustrated the whole interface using Illustrator, and coded in Visual studio code using JavaScript p5canvas, html and css",
-          type: "Programming",
+          type: "Programming & Illustrator",
           url: "/img/game.png",
         },
         {
@@ -332,11 +264,11 @@ db.run(
         },
         {
           id: "5",
-          name: "Catch the students JavaScript game",
+          name: "Luminous brand identity",
           year: 2023,
-          desc: "This is a game made with javascript",
-          type: "Programming",
-          url: "/img/Me.jpg",
+          desc: "This project is a brand identity that I created for an assignment in my course Foundations of Graphic Design. I was given a prompt for a scented candle brand that would be quote: bringing humour and a sense of wonder into their ideas. The ice cream company Ben & Jerrys has been one of their influences. So I came up with Luminus. The image is a part of the brand identity document.",
+          type: "Illustrator & InDesign",
+          url: "/img/luminous.png",
         },
       ];
       // inserts projects
@@ -372,6 +304,7 @@ app.get("/projects/new", function (request, response) {
       name: request.session.name,
       isAdmin: request.session.isAdmin,
     };
+
     response.render("newProject.handlebars", model);
   } else {
     response.redirect("/login");
@@ -395,6 +328,7 @@ app.post("/projects/new", (request, response) => {
         } else {
           console.log("line added to projects table");
         }
+
         response.redirect("/projects");
       }
     );
@@ -515,6 +449,39 @@ app.post("/projects/modify/:id", (request, response) => {
   } else {
     response.redirect("/login");
   }
+});
+
+app.get("/projects/:id", (request, response) => {
+  const id = request.params.id;
+  db.get(
+    "SELECT * FROM projects WHERE pid=?",
+    [id],
+    function (error, theProjects) {
+      if (error) {
+        console.log("ERROR:", error);
+        const model = {
+          dbError: true,
+          theError: error,
+          project: {},
+          isLoggedIn: request.session.isLoggedIn,
+          name: request.session.name,
+          isAdmin: request.session.isAdmin,
+        };
+        response.render("projects.handlebars", model);
+      } else {
+        const model = {
+          dbError: false,
+          theError: "",
+          project: theProjects,
+          isLoggedIn: request.session.isLoggedIn,
+          name: request.session.name,
+          isAdmin: request.session.isAdmin,
+        };
+
+        response.render("projectInfo.handlebars", model);
+      }
+    }
+  );
 });
 
 // skills database
@@ -859,6 +826,60 @@ app.get("/jobs/delete/:id", (request, response) => {
         response.redirect("/skills");
       }
     });
+  } else {
+    response.redirect("/login");
+  }
+});
+//modify job
+app.get("/jobs/modify/:id", (request, response) => {
+  const id = request.params.id;
+  db.get("SELECT * FROM jobs WHERE jid=?", [id], function (error, theJobs) {
+    if (error) {
+      console.log("ERROR:", error);
+      const model = {
+        dbError: true,
+        theError: error,
+        job: {},
+        isLoggedIn: request.session.isLoggedIn,
+        name: request.session.name,
+        isAdmin: request.session.isAdmin,
+      };
+      response.render("modifyJobs.handlebars", model);
+    } else {
+      const model = {
+        dbError: false,
+        theError: "",
+        job: theJobs,
+        isLoggedIn: request.session.isLoggedIn,
+        name: request.session.name,
+        isAdmin: request.session.isAdmin,
+      };
+      response.render("modifyJobs.handlebars", model);
+    }
+  });
+});
+app.post("/jobs/modify/:id", (request, response) => {
+  const id = request.params.id;
+  const newj = [
+    request.body.jobname,
+    request.body.jobdesc,
+    request.body.jobsyear,
+    request.body.jobeyear,
+    id,
+  ];
+  if (request.session.isLoggedIn == true && request.session.isAdmin == true) {
+    db.run(
+      "UPDATE jobs SET jname=?, jdesc=?, jsyear=?, jeyear=?, WHERE jid=?",
+      newj,
+      (error) => {
+        if (error) {
+          console.log("ERROR: ", error);
+        } else {
+          console.log("job updated!");
+        }
+        response.redirect("/jobs");
+      }
+    );
   } else {
     response.redirect("/login");
   }
