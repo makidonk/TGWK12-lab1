@@ -1,19 +1,22 @@
-const express = require("express"); // loads the express package
-const { engine } = require("express-handlebars"); // loads handlebars for Express
-const port = 8090; // defines the port
-const app = express(); // creates the Express application
+const port = 8080; 
+const express = require("express"); 
+const { engine } = require("express-handlebars"); 
+const app = express(); 
 const session = require("express-session");
-const bodyParser = require("body-parser"); // Import body-parser
+const bodyParser = require("body-parser"); 
 const connectSqlite3 = require("connect-sqlite3");
 const sqlite3 = require("sqlite3");
 const SQLiteStore = connectSqlite3(session);
 const bcrypt = require("bcrypt");
+
 // defines handlebars engine
 app.engine("handlebars", engine());
 // defines the view engine to be handlebars
 app.set("view engine", "handlebars");
+
 // defines the views directory
 app.set("views", "./views");
+
 // define static directory "public" to access css/ and img/
 app.use(express.static("public"));
 
@@ -21,8 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const db = new sqlite3.Database("portfolio.db");
-//const hash = bcrypt.hashSync(password,10)
-
 app.use(
   session({
     store: new SQLiteStore({ db: "session-db.db" }),
@@ -184,7 +185,6 @@ app.get("/login/register", (request, response) => {
 app.post("/login/register", (request, response) => {
   const username = request.body.un;
   const password = request.body.pw;
-  //check so its not the same username!
 
   bcrypt.hash(password, 10, (err, hashedPassword) => {
     if (err) {
@@ -223,10 +223,8 @@ db.run(
   "CREATE TABLE projects (pid INTEGER PRIMARY KEY, pname TEXT NOT NULL, pyear INTEGER NOT NULL, pdesc TEXT NOT NULL, ptype TEXT NOT NULL, pimgURL TEXT NOT NULL)",
   (error) => {
     if (error) {
-      // tests error: display error
       console.log("ERROR: ", error);
     } else {
-      // tests error: no error, the table has been created
       console.log("---> Table projects created!");
 
       const projects = [
@@ -271,7 +269,8 @@ db.run(
           url: "/img/luminous.png",
         },
       ];
-      // inserts projects
+
+      // inserts projects into the table
       projects.forEach((oneProject) => {
         db.run(
           "INSERT INTO projects (pid, pname, pyear, pdesc, ptype, pimgURL) VALUES (?, ?, ?, ?, ?, ?)",

@@ -2,7 +2,7 @@
   <div>
     <br />
     <h2 id="back"><a href="/skills">back</a> </h2>
-    <h1>Modify Skill {{skill.sname}}</h1>
+    <h1>Modify skill <br /> <span id="modifyItem">{{skill.sname}}</span></h1>
     {{#if isLoggedIn}}
       {{#if isAdmin}}
         <form action="/skills/modify/{{skill.sid}}" method="post">

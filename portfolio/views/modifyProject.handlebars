@@ -2,7 +2,7 @@
   <div>
     <br />
     <h2 id="back"><a href="/projects">back</a> </h2>
-    <h1>Modify Project {{project.pname}}</h1>
+    <h1>Modify project <br> <span id="modifyItem">{{project.pname}}</span></h1>
     {{#if isLoggedIn}}
       {{#if isAdmin}}
         <form action="/projects/modify/{{project.pid}}" method="post">

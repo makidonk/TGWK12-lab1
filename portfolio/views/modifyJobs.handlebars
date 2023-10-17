@@ -2,7 +2,7 @@
   <div>
     <br />
     <h2 id="back"><a href="/skills">back</a> </h2>
-    <h1>Modify Job {{job.sname}}</h1>
+    <h1>Modify Job <br /> <span id="modifyItem">{{job.jname}}</span></h1>
     {{#if isLoggedIn}}
       {{#if isAdmin}}
         <form action="/jobs/modify/{{job.jid}}" method="post">
